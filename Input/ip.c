@@ -1,0 +1,14 @@
+A;
+B;
+if(C){
+    D;
+}
+else{
+    I;
+}
+S;
+while(K){
+    F;
+}
+E;
+Y;

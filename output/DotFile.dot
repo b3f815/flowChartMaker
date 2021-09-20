@@ -1,0 +1,23 @@
+digraph{
+"A"[shape=oval]
+"B"[shape=box]
+"A" -> "B"
+"C"[shape=diamond]
+"B" -> "C"
+"D"[shape=box]
+"C" -> "D"[label = true]
+"I"[shape=box]
+"C" -> "I"
+"S"[shape=box]
+"I" -> "S"
+"D" -> "S"
+"K"[shape=diamond]
+"S" -> "K"
+"F"[shape=box]
+"K" -> "F"[label = true]
+"F" -> "K"
+"E"[shape=box]
+"K" -> "E"
+"Y"[shape=oval]
+"E" -> "Y"
+}

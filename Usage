@@ -1,0 +1,61 @@
+x   Dependencies :
+        1.Graphviz should be installed and added to path.
+
+    Usage :
+        1.Type your algorithm into ip.c inside the Input folder.
+        2.Run the java Program : src/com/flowChartMaker/astMaker.java
+        3.Get output file flow.png from output folder.
+
+    The phases in the development of this project were
+        1.Developing a Grammar for the input text:
+            This was achieved with ANTLR tool.This program lets us create a grammar and build a AST(Abstract Syntax Tree for an input which follows the grammar)
+
+            An example program following our grammar :
+                A;
+                B;
+                if(C){
+                    D;
+                }
+                else{
+                    E;
+                }
+                F;
+
+        2.Accessing the syntax tree using our driver Java Program:
+            The tree Object can be easily accessed.
+            DFS Traversal is used to travel the tree.
+
+            A context is a part of the input code which adheres to a specified grammar rule.
+            Various contexts are accessed and processing were done in each of them using a simple switch-case block.
+
+            A few contexts  in our grammar are :
+                IfBlockContext,ElseBlockContext,IfElseBlockContext,WhileBlockContext,LineContext...
+
+        3.Visualizing the input as a FlowChart:
+            The visualization is mostly carried by the graphviz tool.
+
+            A dot file (DotFile.dot) is created during the execution which holds various nodes,edges with their properties in our graph.
+
+            A node is represented as : nodeName[style parameters]
+                eg : A[shape = box]
+                    B[shape = diamond]
+            An edge is represented as node1 -> node2 [edge parameters]
+                eg : A -> B [label = "this label"]
+
+            An example dot file would look something like :
+                digraph{                    //specifying a directed graph.
+                A[shape = box];             //node
+                B;                          //node
+                A -> B;                     //edge
+                }
+
+            Such nodes and edges are defined are written into a StringBuilder Object,This object is dumped into "DotFile.dot"
+            after the whole AST is processed.
+
+            The logic behind creating such nodes and edges are explained within the code as comments.
+
+        4.Executing the .dot file and storing the output image into output folder.
+
+            " dot -T png "output_dest.png" " is run from the program using Runtime.getRuntime.exec() .
+
+
