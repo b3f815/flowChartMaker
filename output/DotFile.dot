@@ -8,19 +8,9 @@ digraph{
 "i==1" -> "j=2"[label = true]
 "j=3"[shape=box]
 "i==1" -> "j=3"
-"print"[shape=box]
-"j=3" -> "print"
-"j=2" -> "print"
-"asda"[shape=box]
-"print" -> "asda"
-"sun"[shape=box]
-"asda" -> "sun"
-"45"[shape=box]
-"sun" -> "45"
-"D= D*3"[shape=box]
-"45" -> "D= D*3"
-"T = t/4"[shape=box]
-"D= D*3" -> "T = t/4"
-"X--"[shape=oval]
-"T = t/4" -> "X--"
+"print(i)"[shape=box]
+"j=3" -> "print(i)"
+"j=2" -> "print(i)"
+"print(j)"[shape=oval]
+"print(i)" -> "print(j)"
 }

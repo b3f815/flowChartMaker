@@ -6,8 +6,6 @@ if(i==1){
 else{
     j=3;
 }
-print(asda);
-sun(45);
-D= D*3;
-T = t/4;
-X--;
+
+print(i);
+print(j);

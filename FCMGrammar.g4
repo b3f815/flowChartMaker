@@ -2,15 +2,17 @@ grammar FCMGrammar;
 
 program :( line | block |ifBlock |whileBlock )* EOF;
 block : PARAN_OPEN (line | ifBlock | whileBlock)*  PARAN_CLOSE;
-cond :  STATEMENT*;
+cond :  STATEMENT
+        |STATEMENT SPECIAL* STATEMENT*;
 ifBlock : IF B_OPEN cond B_CLOSE block
         | IF B_OPEN cond B_CLOSE block elseBlock
         | IF B_OPEN cond B_CLOSE block elseifBlock;
 elseBlock : ELSE block;
 elseifBlock : ELSEIF cond block elseifBlock
               |ELSEIF cond block elseBlock;
-whileBlock : WHILE cond block;
-line : STATEMENT';';
+whileBlock : WHILE B_OPEN cond B_CLOSE block;
+line : STATEMENT';'
+        |STATEMENT B_OPEN STATEMENT B_CLOSE';';
 
 
 ELSEIF : 'else if';

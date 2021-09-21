@@ -68,16 +68,35 @@ public class astMaker {
             //Handle each individual line other than conditionals
             case "LineContext":
                 //Create a last element of none exists
+
                 if (lastElement == null) {
-                    node = createNode(tree.getChild(0).getText(), "oval");
-                    lastElement = node;
-                } else { //assigning oval shape to last node
-                    if(tree.getSourceInterval().b >= commonTokenStream.getNumberOfOnChannelTokens() - 2 ){
+                    if(tree.getChildCount() > 2){ //To check if this is a complex statement eg : function call.
+                        node = createNode(tree.getChild(0).getText() + tree.getChild(1).getText()+tree.getChild(2).getText()+tree.getChild(3).getText(),"oval");
+                    }
+                    else{
                         node = createNode(tree.getChild(0).getText(), "oval");
+                    }
+                    lastElement = node;
+                }
+
+                else { //assigning oval shape to last node
+                    if(tree.getSourceInterval().b >= commonTokenStream.getNumberOfOnChannelTokens() - 2 ){
+                        if(tree.getChildCount() > 2){
+                            node = createNode(tree.getChild(0).getText() + tree.getChild(1).getText()+tree.getChild(2).getText()+tree.getChild(3).getText(),"oval");
+                        }
+                        else{
+                            node = createNode(tree.getChild(0).getText(), "oval");
+                        }
                     }
                     //assign box shapes to new nodes
                     else{
-                        node = createNode(tree.getChild(0).getText(), "box");
+                        if(tree.getChildCount() > 2){
+                            node = createNode(tree.getChild(0).getText() + tree.getChild(1).getText()+tree.getChild(2).getText()+tree.getChild(3).getText(),"box");
+                        }
+                        else{
+                            node = createNode(tree.getChild(0).getText(), "box");
+                        }
+
                     }
 
                     connectFrom(lastElement, node,doLabel);
@@ -88,7 +107,12 @@ public class astMaker {
                 //Converging from if-else if -else blocks to next statement
                 if(connectFromIfEndings == true){
                     for(String s : ifEndings){
-                        connectFrom(s,getNode(tree.getChild(0).getText()),false);
+                        if (tree.getChildCount() > 2){
+                            connectFrom(s,getNode(tree.getChild(0).getText() + tree.getChild(1).getText()+tree.getChild(2).getText()+tree.getChild(3).getText()),false);
+                        }
+                        else{
+                            connectFrom(s,getNode(tree.getChild(0).getText()),false);
+                        }
                     }
                     connectFromIfEndings = false;
                     ifEndings.clear();
@@ -106,8 +130,14 @@ public class astMaker {
                     handle(tree.getChild(i));
                 }
 
-                //Loop back to while : condition and setting flor to normal afterwards
-                node = getNode(tree.getChild(2).getText());
+                //Loop back to while : condition and setting flow to normal afterwards
+                if(tree.getChild(2).getChildCount()>2){
+                    node = getNode(tree.getChild(2).getChild(0).getText()+tree.getChild(2).getChild(1).getText()+tree.getChild(2).getChild(2).getText());
+                }
+                else{
+                    node = getNode(tree.getChild(2).getText());
+                }
+
                 connectFrom(lastElement,node,false);
                 lastElement = node;
                 break;
@@ -132,12 +162,9 @@ public class astMaker {
                 }
                 //Else statements mean end of the block,converge after this execution.
                 if(tree.getParent().getClass().getSimpleName().equalsIgnoreCase("elseBlockContext")){
-                    if(!ifEndings.contains(node)){
-                        connectFromIfEndings = true;
-                    }
-
+                   lastElement = node;
+                    connectFromIfEndings = true;
                 }
-
                 break;
 
             //Else-If blocks
@@ -178,12 +205,21 @@ public class astMaker {
             case "CondContext":
 
                 //create a new node with diamond shape
-                node = createNode(tree.getChild(0).getText(),"diamond");
-
-
+                if(tree.getChildCount() > 2){
+                    node = createNode(tree.getChild(0).getText() + tree.getChild(1).getText()+tree.getChild(2).getText(),"diamond");
+                }
+                else{
+                    node = createNode(tree.getChild(0).getText(), "diamond");
+                }
                 if(connectFromIfEndings == true){
                     for(String s : ifEndings){
-                        connectFrom(s,getNode(tree.getChild(0).getText()),false);
+                        if (tree.getChildCount() > 2){
+                            connectFrom(s,getNode(tree.getChild(0).getText() + tree.getChild(1).getText()+tree.getChild(2).getText()),false);
+                        }
+                        else{
+                            connectFrom(s,getNode(tree.getChild(0).getText()),false);
+                        }
+
                     }
                     connectFromIfEndings = false;
                     ifEndings.clear();
