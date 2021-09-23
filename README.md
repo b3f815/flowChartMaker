@@ -34,15 +34,16 @@ FlowChartMaker-textToFlowChart is a Java-Based application to convert texual inp
 
 For Example :
 ```
-  A; 
-  B; 
-  if(C){
-    D;
-  }
-  else{
-    E;
-  }
-  F;
+int i=1;
+int j=1;
+if(i==1){
+    j=2;
+}
+else{
+    j=3;
+}
+print(i);
+print(j);
 ```
 
 ![alt text](https://github.com/b3f815/flowChartMaker/blob/master/output/flow.png?raw=true)
