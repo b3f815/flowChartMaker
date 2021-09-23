@@ -45,4 +45,6 @@ For Example :
   F;
 ```
 
+![alt text](https://github.com/b3f815/flowChartMaker/blob/master/output/flow.png?raw=true)
+
 Peace ✌️.
