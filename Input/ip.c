@@ -6,6 +6,5 @@ if(i==1){
 else{
     j=3;
 }
-
 print(i);
 print(j);
